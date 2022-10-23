@@ -16,7 +16,7 @@ class Loans {
     public:
         Loans();
 
-        void addLoan(Books book, Patrons patrons);
+        void addLoan(Books book, Patrons patrons, int lNumber);
         //edit??
         void deleteLoan(Books books, Patrons patrons);
         Loan findLoan();

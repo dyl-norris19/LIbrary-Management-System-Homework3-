@@ -22,8 +22,8 @@ class Patron {
 
     public:
 
-        Patron();
-        Patron(string n, int id, int f, int num);
+        Patron(int pNumber);
+        Patron(string n, int id, int f, int num, int pNumber);
 
         std::string getName();
         void setName(string n);

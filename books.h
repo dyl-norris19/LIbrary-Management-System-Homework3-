@@ -22,7 +22,7 @@ class Books {
 
         Books();
 
-        void addBook();
+        void addBook(int bNumber);
         void editCost();
         void deleteBook();
         Book findBook();

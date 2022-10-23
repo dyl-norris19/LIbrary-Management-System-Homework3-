@@ -18,42 +18,47 @@ report lost (update book and charge patron book cost)
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
+#include <cmath>
 
 using namespace std;
 
 Loans::Loans() {}
 
 //take loanNumber + 640
-void Loans::addLoan(Books books, Patrons patrons) {
+void Loans::addLoan(Books books, Patrons patrons, int lNumber) {
     Patron patron = patrons.findPatron();
-    if (patron == Patron())
+    if (patron == Patron(0))
         cout << "Patron not found. Check id" << endl;
     else if (patron.getNumBooks() >= 6)
         cout << "Too many books checked out" << endl;
     else {
         Book book = books.findBook();
-        if (book == Book())
+        if (book == Book(0))
             cout << "Book not found. Check id" << endl;
         else {
-            loans.push_back(Loan(book.getId(), patron.getId())); //fix this
+            loans.push_back(Loan(book.getId(), patron.getId(), lNumber));
+            cout << "Loan Id: " << loans.at(loans.size() - 1).getLoanId() << endl << endl;
         }
     } 
 }
 
-//edit?? recheck out a book
+//edit?? recheck out a book (renew)
 
 void Loans::deleteLoan(Books books, Patrons patrons) { //return book
     Loan loan = findLoan();
     int loanIndex;
     int patronId;
-    float fine;
+    float fine = 0;
+    time_t date = time(0);
     for (int i = 0; i < loans.size(); i++)
         if (loans.at(i).getLoanId() == loan.getLoanId())
             loanIndex = loans.at(i).getLoanId();
     loans.at(loanIndex).updateLoan();
     if (loans.at(loanIndex).getStatus() == "Overdue") {
-        patronId = loans.at(loanIndex).getPatronId();
-        patrons.editFineBalance(patronId, fine);
+        patronId = loans.at(loanIndex).getPatronId();           //seconds in a day
+        fine = floor((date - loans.at(loanIndex).getDueDate()) / 86400) * .25;
+        patrons.addFineBalance(patronId, fine);
     }
 
 }

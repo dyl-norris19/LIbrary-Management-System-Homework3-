@@ -10,11 +10,11 @@
 
 using namespace std;
 
-Book::Book() {
+Book::Book(int bNumber) {
     author = "Unknown";
     title = "None";
     isbnNum = 0;
-    libraryId = 0;
+    libraryId = 264000 + bNumber; //264
     cost = 0;
     status = "In";
 }

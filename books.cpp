@@ -12,21 +12,22 @@ using namespace std;
 
 Books::Books() {}
 
-void Books::addBook() {
-    Book b = Book(); int Id = 0; int tempI; float tempF; 
+void Books::addBook(int bNumber) {
+    Book b = Book(bNumber); int tempI; float tempF; 
     char tempC; string tempS; bool valid = false;
 
+    cin.ignore();
     //prompts and stores author
-    cout << "Author: "; cin >> tempS; b.setAuthor(tempS);
+    cout << "Author: "; getline(cin, tempS); b.setAuthor(tempS);
 
     //prompts and stores title
-    cout << "Title: "; cin >> tempS; b.setTitle(tempS);
+    cout << "Title: "; getline(cin, tempS); b.setTitle(tempS);
 
     //prompts and stores isbn
     cout << "ISBN: "; cin >> tempF; b.setISBN(tempF);
 
     //create random libraryId!!!!
-    Id = books.size(); cout << "Library ID: "  << Id << endl; b.setId(Id);
+    cout << "Library ID: "  << b.getId() << endl;
 
     //prompt and store cost
     cout << "Cost: "; cin >> tempI; b.setCost(tempI);
@@ -101,7 +102,7 @@ Book Books::findBook() {
     for (int i = 0; i < books.size(); i++)
         if (books.at(i).getId() == id)
             return books.at(i);
-    return Book();
+    return Book(0);
 }
 
 //Book {i + 1} -- {title}, {author} {libraryId} - ISBN: {isbnNum} Cost: {cost} Status: {status}

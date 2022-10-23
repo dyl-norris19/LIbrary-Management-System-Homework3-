@@ -23,7 +23,7 @@ class Book {
 
     public:
 
-        Book();
+        Book(int bNumber);
 
         string getAuthor();
         void setAuthor(string a);

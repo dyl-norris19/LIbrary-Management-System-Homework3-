@@ -12,16 +12,16 @@
 
 using namespace std;
 
-Patron::Patron() {
+Patron::Patron(int pNumber) {
     name = "None";
-    id = 0;
+    id = 438000 + pNumber;
     fineBalance = 0;
     numBooks = 0;
 }
 
-Patron::Patron(string n, int i, int f, int num) {
+Patron::Patron(string n, int i, int f, int num, int pNumber) {
     name = n;
-    id = i;
+    id = 438000 + pNumber; //438
     fineBalance = f;
     numBooks = num;
 }

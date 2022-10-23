@@ -22,8 +22,9 @@ class Patrons {
 
         Patrons();
 
-        void addPatron();
-        void editFineBalance(int id, float f);
+        void addPatron(int pNumber);
+        void addFineBalance(int id, float f);
+        void payFineBalance(int id, float c);
         void editNumBooks(int id);
         void deletePatron();
         Patron findPatron();

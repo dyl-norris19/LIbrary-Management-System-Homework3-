@@ -25,7 +25,7 @@ class Loan {
 
     public:
         Loan();
-        Loan(int b, int p);
+        Loan(int b, int p, int lNumber);
 
         int getLoanId();
         void setLoanId(int l);

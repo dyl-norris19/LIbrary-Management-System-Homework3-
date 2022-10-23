@@ -12,24 +12,25 @@ using namespace std;
 
 Patrons::Patrons() {}
 
-void Patrons::addPatron() {
-    Patron patron = Patron(); int id = 0; string tempS; int tempI;
+void Patrons::addPatron(int pNumber) {
+    Patron patron = Patron(pNumber); string tempS; int tempI;
+    cin.ignore();
     //name
-    cout << "Name: "; cin >> tempS; patron.setName(tempS);
+    cout << "Name: "; getline(cin, tempS); patron.setName(tempS);
 
     //id
-    id = patrons.size(); cout << "Patron ID: " << id << endl; patron.setId(id);
+    cout << "Patron ID: " << patron.getId() << endl;
 
     //fine balance
     cout << "Fine Balance: $0" << endl; patron.setFine(0);
 
     //num books
-    cout << "Number of Books checked out: 0" << endl; patron.setNumBooks(0);
+    cout << "Number of Books checked out: 0" << endl << endl; patron.setNumBooks(0);
 
     patrons.push_back(patron);
 }
 
-void Patrons::editFineBalance(int id, float f) {
+void Patrons::addFineBalance(int id, float f) {
     float fine;
     for (int i = 0; i < patrons.size(); i++) {
         if (id == patrons.at(i).getId()) {
@@ -38,6 +39,22 @@ void Patrons::editFineBalance(int id, float f) {
         }
     }
         
+}
+
+void Patrons::payFineBalance(int id, float c) {
+    float credit;
+    bool found = false;
+    for (int i = 0; i < patrons.size(); i++) {
+        if (id == patrons.at(i).getId()) {
+            found = true;
+            if (c <= patrons.at(i).getFine()) {
+                credit = patrons.at(i).getFine() - c;
+                patrons.at(i).setFine(credit);
+            } else
+                cout << "Payment more than fine. Could not execute." << endl;
+        } else
+            cout << "Patron not found" << endl;
+    }
 }
 
 void Patrons::editNumBooks(int id) {
@@ -63,7 +80,7 @@ Patron Patrons::findPatron() {
     for (int i = 0; i < patrons.size(); i++)
         if (patrons.at(i).getId() == id)
             return patrons.at(i);
-    return Patron();
+    return Patron(0);
 }
 
 //Patron {i + 1} -- Name: {name} {id} - Fine Balance: {fineBalance} - Number of books: {numBooks}

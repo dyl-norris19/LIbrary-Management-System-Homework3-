@@ -19,8 +19,8 @@ Loan::Loan() {
     status = "Normal";
 }
 
-Loan::Loan(int b, int p) {
-    loanId = 0; //create random id?
+Loan::Loan(int b, int p, int lNumber) {
+    loanId = 645000 + lNumber; //create random id? 645
     bookId = b;
     patronId = p;
     dueDate = time(0) + 864000; //set due date (todays date + 10 days)
