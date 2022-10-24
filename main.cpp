@@ -39,6 +39,7 @@ void printMenu() {
     cout << "r - Renew Book" << endl;
     cout << "f - Pay Fines" << endl;
     cout << "v - View Overdue Books" << endl;
+    cout << "t - Report Lost" << endl;
     cout << "k - Print Books" << endl;
     cout << "a - Print Patrons" << endl;
     cout << "l - Print Loans" << endl;
@@ -68,11 +69,14 @@ void executeMenu() {
         else if (choice == 'r')
             loans.renewLoan(books, patrons);
 
-        else if (choice == 'f') {
-
-        } else if (choice == 'v')
+        else if (choice == 'f')
             patrons.payFineBalance();
 
+        else if (choice == 'v')
+            loans.printOverdue(books, patrons);
+        
+        else if (choice == 't')
+            loans.reportLost(books, patrons);
         else if (choice == 'k')
             books.printBooks();
 
@@ -89,5 +93,4 @@ void executeMenu() {
             cout << "Input not valid. Please try again." << endl;
 
     }
-    //list all patrons, books, and loans
 }

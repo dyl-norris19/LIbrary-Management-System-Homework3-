@@ -4,16 +4,6 @@
  * 
  */
 
-/* check out book (update book and patron info, add a loan)
-check in book (check for fines, update patron and book info, delete loan)
-list all overdue
-list all books for patron
-update loan status based on clock
-re check a book
-edit a loan
-report lost (update book and charge patron book cost)
-*/
-
 #include "loans.h"
 #include <iostream>
 #include <string>
@@ -25,6 +15,8 @@ using namespace std;
 
 Loans::Loans() {}
 
+//adds loan to vector with book and patron. if book or patron not found,
+//do nothing and let user know
 //take loanNumber + 640
 void Loans::addLoan(Books books, Patrons patrons, int lNumber) {
     Patron patron = patrons.findPatron();
@@ -38,11 +30,15 @@ void Loans::addLoan(Books books, Patrons patrons, int lNumber) {
             cout << "Book not found. Check id" << endl;
         else {
             loans.push_back(Loan(book.getId(), patron.getId(), lNumber));
+            patrons.editNumBooks(patron.getId(), 1);
+            books.editStatus(book.getId(), "Out");
             cout << "Loan Id: " << loans.at(loans.size() - 1).getLoanId() << endl << endl;
         }
     } 
 }
 
+//extends due date by 10 days
+//if loan not found, do nothing and let user know
 void Loans::renewLoan(Books books, Patrons patrons) {
     Loan loan = findLoan();
     int loanIndex;
@@ -58,26 +54,64 @@ void Loans::renewLoan(Books books, Patrons patrons) {
         cout << "Could not find loan" << endl;
 }
 
+//deletes loan, if loan not found, do nothing and let user know
 void Loans::deleteLoan(Books books, Patrons patrons) { //return book
     Loan loan = findLoan();
     int loanIndex;
     int patronId;
     float fine = 0;
     time_t date = time(0);
-    for (int i = 0; i < loans.size(); i++)
-        if (loans.at(i).getLoanId() == loan.getLoanId())
+    bool found = false;
+    for (int i = 0; i < loans.size(); i++) {
+        if (loans.at(i).getLoanId() == loan.getLoanId()) {
+            found = true;
             loanIndex = i;
-    loans.at(loanIndex).updateLoan();
-    if (loans.at(loanIndex).getStatus() == "Overdue") {
-        patronId = loans.at(loanIndex).getPatronId();           //seconds in a day
-        fine = floor((date - loans.at(loanIndex).getDueDate()) / 86400) * .25;
-        patrons.addFineBalance(patronId, fine);
+            loans.at(loanIndex).updateLoan();
+            if (loans.at(loanIndex).getStatus() == "Overdue") {
+                patronId = loans.at(loanIndex).getPatronId();           //seconds in a day
+                fine = floor((date - loans.at(loanIndex).getDueDate()) / 86400) * .25;
+                patrons.addFineBalance(patronId, fine);
+            }
+        patrons.editNumBooks(patronId, -1);
+        books.editStatus(loans.at(loanIndex).getBookId(), "In");
+        loans.erase(loans.begin() + loanIndex);
+        }
     }
-    loans.erase(loans.begin() + loanIndex);
+    if (!found)
+        cout << "Loan not found. Check Id." << endl;
 }
 
+//changes book status, charges patron, and 
+//deletes loan. if not found, do thing and let user know
+void Loans::reportLost(Books books, Patrons patrons) {
+    Patron patron = patrons.findPatron();
+    Book book = books.findBook();
+    Loan loan = findLoan();
+    int loanIndex;
+    bool found = false;
+    for (int i = 0; i < loans.size(); i++) {
+        if (loans.at(i).getLoanId() == loan.getLoanId()) {
+            found = true;
+            loanIndex = i;
+        }
+    }       
+    if (found) {
+        if (patron == Patron(0))
+            cout << "Patron not found. Check id" << endl;
+        else {
+            if (book == Book(0))
+                cout << "Book not found. Check id" << endl;
+            else {
+                books.editStatus(book.getId(), "Lost");
+                patrons.addFineBalance(patron.getId(), book.getCost());
+                loans.erase(loans.begin() + loanIndex);
+            }
+        } 
+    }
+}
 
-
+//finds loan using loan id
+//if not found, return default loan
 Loan Loans::findLoan() {
     int id;
     cout << "Enter Loan ID: ";
@@ -88,6 +122,7 @@ Loan Loans::findLoan() {
     return Loan();
 }
 
+//prints all loans with all attributes
 //Loan {i + 1} -- Loan ID: {loanId} BookId: {bookId} PatronId: {patronId} Due date: {dueDate} Status: {status}
 void Loans::printLoans() {
     cout << "Loans" << endl;
@@ -95,6 +130,14 @@ void Loans::printLoans() {
         cout << "Loan " << i + 1 << " --  Loan ID: " << loans.at(i).getLoanId() << " Book ID: "
              << loans.at(i).getBookId() << " Patron ID: " << loans.at(i).getPatronId() << " Due Date: "
              << loans.at(i).getDueDate() << " Status: " << loans.at(i).getStatus() << endl;
-} //fix due date print out!!!!
+} 
 
-//print llist of overdue books with patron info, update books and patrons
+void Loans::printOverdue(Books books, Patrons patrons) {
+    for (int i = 0; i < loans.size(); i++) {
+        loans.at(i).updateLoan();
+        if (loans.at(i).getStatus() == "Overdue") {
+            int patronId = loans.at(i).getPatronId();
+            patrons.printPatron(patronId);
+        }
+    }
+}

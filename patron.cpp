@@ -32,7 +32,7 @@ void Patron::setName(string n) {name = n;}
 int Patron::getId() {return id;}
 void Patron::setId(int i) {id = i;}
 
-int Patron::getFine() {return fineBalance;}
+float Patron::getFine() {return fineBalance;}
 void Patron::setFine(int f) {fineBalance = f;}
 
 int Patron::getNumBooks() {return numBooks;}

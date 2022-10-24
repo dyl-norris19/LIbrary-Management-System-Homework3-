@@ -12,6 +12,7 @@ using namespace std;
 
 Patrons::Patrons() {}
 
+//adds patron to vector
 void Patrons::addPatron(int pNumber) {
     Patron patron = Patron(pNumber); string tempS; int tempI;
     cin.ignore();
@@ -30,40 +31,60 @@ void Patrons::addPatron(int pNumber) {
     patrons.push_back(patron);
 }
 
+//uses id to find patron, add to the total fine balance
+//if not found, do nothing and let user know
 void Patrons::addFineBalance(int id, float f) {
     float fine;
+    bool found = false;
     for (int i = 0; i < patrons.size(); i++) {
         if (id == patrons.at(i).getId()) {
+            found = true;
             fine = patrons.at(i).getFine() + f;
             patrons.at(i).setFine(fine);
         }
     }
-        
+    if (!found)
+        cout << "Patron not found. Check Id" << endl;
 }
 
+//uses find patron to find patron, if not found so nothing and let user know
+//subtracts the amount paid from fine. if greater than fine, do nothing and let user know
 void Patrons::payFineBalance() {
     Patron patron = findPatron();
     int patronIndex;
     float credit;
-    cout << "Enter payment amount: "; cin >> credit;
+    bool found = false;
 
-    for (int i = 0; i < patrons.size(); i++)
-        if (patron.getId() == patrons.at(i).getId())
+    for (int i = 0; i < patrons.size(); i++) {
+        if (patron.getId() == patrons.at(i).getId()) {
+            found == true;
             patronIndex = i;
-    
-    if (credit > patrons.at(patronIndex).getFine())
-        cout << "Payment more than fine. Could not execute" << endl;
-    else   
-        patrons.at(patronIndex).setFine(patrons.at(patronIndex).getFine() - credit);
+            cout << "Enter payment amount: "; cin >> credit;
+            if (credit > patrons.at(patronIndex).getFine())
+                cout << "Payment more than fine. Could not execute" << endl;
+            else   
+                patrons.at(patronIndex).setFine(patrons.at(patronIndex).getFine() - credit);
+        }
+    }
+    if (!found)
+        cout << "Patron not found. Check Id" << endl;
 }
 
-void Patrons::editNumBooks(int id) {
-    int n; cout << "Num books: "; cin >> n;
-    for (int i = 0; i < patrons.size(); i++) 
-        if (id == patrons.at(i).getId())
-            patrons.at(i).setNumBooks(n);
+//edits num books, in parameter 1 for adding, -1 for subtracting one
+//if patron not found, do nothing and let patron know
+void Patrons::editNumBooks(int id, int n) {
+    bool found = false;
+    for (int i = 0; i < patrons.size(); i++) {
+        if (id == patrons.at(i).getId()) {
+            patrons.at(i).setNumBooks(patrons.at(i).getNumBooks() + n);
+            found = true;
+        }
+    }
+    if (!found)
+        cout << "Patron not found. Check Id" << endl;
 }
 
+//deletes patron from vector
 void Patrons::deletePatron() {
     int id;
     cout << "Patron ID: ";
@@ -73,6 +94,7 @@ void Patrons::deletePatron() {
             patrons.erase(patrons.begin() + i);
 }
 
+//finds patron using id, if not found return default patron
 Patron Patrons::findPatron() {
     int id;
     cout << "Patron ID: ";
@@ -83,7 +105,7 @@ Patron Patrons::findPatron() {
     return Patron(0);
 }
 
-//Patron {i + 1} -- Name: {name} {id} - Fine Balance: {fineBalance} - Number of books: {numBooks}
+//prints out all patrons by first name
 void Patrons::printPatrons() {
     cout << "\nPatrons" << endl;
     for (int i = 0; i < patrons.size(); i++)
@@ -93,6 +115,16 @@ void Patrons::printPatrons() {
             cout << patrons.at(i).getName() << endl;
 }
 
+//prints out all atributes of one patron using id
+void Patrons::printPatron(int id) {
+    for (int i = 0; i < patrons.size(); i++)
+        if (id == patrons.at(i).getId())
+            cout << patrons.at(i).getName() << " " << patrons.at(i).getId() << " $" << 
+                    patrons.at(i).getFine() << " " << patrons.at(i).getNumBooks() << endl;
+}
+
+//prints out all atributes of all patrons
+//Patron {i + 1} -- Name: {name} {id} - Fine Balance: {fineBalance} - Number of books: {numBooks}
 void Patrons::printDetails() {
     int id;
     cout << "Patron ID: ";

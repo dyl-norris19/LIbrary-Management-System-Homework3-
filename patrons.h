@@ -25,10 +25,11 @@ class Patrons {
         void addPatron(int pNumber);
         void addFineBalance(int id, float f);
         void payFineBalance();
-        void editNumBooks(int id);
+        void editNumBooks(int id, int n);
         void deletePatron();
         Patron findPatron();
         void printPatrons();
+        void printPatron(int id);
         void printDetails();
 };
 #endif

@@ -17,7 +17,7 @@ class Patron {
     private:
         string name;
         int id;
-        int fineBalance;
+        float fineBalance;
         int numBooks;
 
     public:
@@ -31,7 +31,7 @@ class Patron {
         int getId();
         void setId(int i);
 
-        int getFine();
+        float getFine();
         void setFine(int f);
 
         int getNumBooks();

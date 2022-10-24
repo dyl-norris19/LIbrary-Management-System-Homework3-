@@ -12,6 +12,7 @@ using namespace std;
 
 Books::Books() {}
 
+//gets book info, adds it to books vector
 void Books::addBook(int bNumber) {
     Book b = Book(bNumber); int tempI; float tempF; 
     char tempC; string tempS; bool valid = false;
@@ -57,13 +58,12 @@ void Books::addBook(int bNumber) {
                 cout << "Input invalid. i - In, o - Out, r - Repair, l - Lost" << endl;
                 break;
         }
-    }   
-    //change to enum? ^
+    }
     cout << endl;
     books.push_back(b);
 }
 
-//Q: edit?? A: the cost
+//uses id to find book, edits cost,  if not found do nothing and inform user
 void Books::editCost() {
     int id; cout << "Enter Library Id: "; cin >> id;
     int cost; cout << "Enter new cost"; cin >> cost;
@@ -80,6 +80,15 @@ void Books::editCost() {
         cout << "Not found, check id";
 }
 
+//uses id to find book, sets the status
+void Books::editStatus(int id, string s) {
+    for (int i = 0; i < books.size(); i++) 
+        if (id == books.at(i).getId())
+            books.at(i).setStatus(s);
+}
+
+//prompts id and uses it to find book and delete from books vector, 
+//if not found, do nothing and let user know
 void Books::deleteBook() {
     int id; cout << "Enter Library Id: "; cin >> id;
     bool found = false;
@@ -94,7 +103,7 @@ void Books::deleteBook() {
     cout << endl;
 }
 
-//if not found, returns 1st book
+//finds book using id, if not found, returns default book
 Book Books::findBook() {
     int id;
     cout << "Enter Library Id: ";
@@ -105,6 +114,7 @@ Book Books::findBook() {
     return Book(0);
 }
 
+//prints out books by title, if no books outputs no books
 //Book {i + 1} -- {title}, {author} {libraryId} - ISBN: {isbnNum} Cost: {cost} Status: {status}
 void Books::printBooks() {
     cout << "\nBooks" << endl;
@@ -119,6 +129,7 @@ void Books::printBooks() {
     cout << endl;
 }
 
+//prints all atributes of all books
 void Books::printDetails() {
     int id;
     cout << "Enter library id: ";

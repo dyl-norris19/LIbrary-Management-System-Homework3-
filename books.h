@@ -24,6 +24,7 @@ class Books {
 
         void addBook(int bNumber);
         void editCost();
+        void editStatus(int id, string s);
         void deleteBook();
         Book findBook();
         void printBooks();

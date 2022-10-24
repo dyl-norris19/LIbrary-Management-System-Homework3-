@@ -20,7 +20,9 @@ class Loans {
         void renewLoan(Books book, Patrons patrons);
         void deleteLoan(Books books, Patrons patrons);
         Loan findLoan();
+        void reportLost(Books books, Patrons patrons);
         void printLoans();
+        void printOverdue(Books books, Patrons patrons);
 
 };
 #endif
