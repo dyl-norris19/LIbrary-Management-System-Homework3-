@@ -43,6 +43,6 @@ class Loan {
         void setStatus(string s);
 
         void updateLoan();
-
+        bool operator==(const Loan& rhs) const;
 };
 #endif

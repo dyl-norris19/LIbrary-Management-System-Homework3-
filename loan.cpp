@@ -46,3 +46,11 @@ void Loan::updateLoan() {
     if (dueDate < time(0))
         status = "Overdue";
 }
+
+bool Loan::operator==(const Loan& rhs) const {
+    if (loanId == rhs.loanId && bookId == rhs.bookId && 
+        patronId == rhs.patronId && dueDate == rhs.dueDate && 
+        status == rhs.status)
+        return true;
+    return false;
+}

@@ -39,13 +39,16 @@ void printMenu() {
     cout << "r - Renew Book" << endl;
     cout << "f - Pay Fines" << endl;
     cout << "v - View Overdue Books" << endl;
+    cout << "k - Print Books" << endl;
+    cout << "a - Print Patrons" << endl;
+    cout << "l - Print Loans" << endl;
     cout << "q - Quit" << endl;
 
     cout << "\nChoose an option: ";
 }
 
 void executeMenu() {
-    char choice = 'a'; //to start the loop
+    char choice = 'z'; //to start the loop
     while (choice != 'q') {
         printMenu();
         cin >> choice;
@@ -59,25 +62,29 @@ void executeMenu() {
         else if (choice == 'o')
             loans.addLoan(books, patrons, loanNumber++);
 
-        else if (choice == 'i') {
+        else if (choice == 'i')
+            loans.deleteLoan(books, patrons);
 
+        else if (choice == 'r')
+            loans.renewLoan(books, patrons);
 
-        } else if (choice == 'r') {
+        else if (choice == 'f') {
 
+        } else if (choice == 'v')
+            patrons.payFineBalance();
 
-        } else if (choice == 'f') {
+        else if (choice == 'k')
+            books.printBooks();
 
-        } else if (choice == 'v') {
-            int id;
-            float payment;
-            cout << "Enter Patron Id: ";
-            cin >> id;
-            cout << endl << "Enter payment amount: ";
-            cin >> payment;
-            cout << endl;
-            patrons.payFineBalance(id, payment);
-        } else if (choice == 'q')
+        else if (choice == 'a')
+            patrons.printPatrons();
+
+        else if (choice == 'l')
+            loans.printLoans();
+
+        else if (choice == 'q')
             cout << "Goodbye!" << endl;
+
         else
             cout << "Input not valid. Please try again." << endl;
 

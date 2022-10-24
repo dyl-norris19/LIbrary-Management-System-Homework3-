@@ -17,12 +17,10 @@ class Loans {
         Loans();
 
         void addLoan(Books book, Patrons patrons, int lNumber);
-        //edit??
+        void renewLoan(Books book, Patrons patrons);
         void deleteLoan(Books books, Patrons patrons);
         Loan findLoan();
         void printLoans();
-
-
 
 };
 #endif

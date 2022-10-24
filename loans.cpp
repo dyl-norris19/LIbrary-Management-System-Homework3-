@@ -43,7 +43,20 @@ void Loans::addLoan(Books books, Patrons patrons, int lNumber) {
     } 
 }
 
-//edit?? recheck out a book (renew)
+void Loans::renewLoan(Books books, Patrons patrons) {
+    Loan loan = findLoan();
+    int loanIndex;
+    if (!(loan == Loan())) {
+        for (int i = 0; i < loans.size(); i++)
+            if (loans.at(i).getLoanId() == loan.getLoanId())
+                loanIndex = i;
+        if (loans.at(loanIndex).getStatus() == "Overdue")
+            cout << "Cannot renew overdue book" << endl;
+        else
+            loans.at(loanIndex).setDueDate(loans.at(loanIndex).getDueDate() + 864000);
+    } else
+        cout << "Could not find loan" << endl;
+}
 
 void Loans::deleteLoan(Books books, Patrons patrons) { //return book
     Loan loan = findLoan();
@@ -53,15 +66,17 @@ void Loans::deleteLoan(Books books, Patrons patrons) { //return book
     time_t date = time(0);
     for (int i = 0; i < loans.size(); i++)
         if (loans.at(i).getLoanId() == loan.getLoanId())
-            loanIndex = loans.at(i).getLoanId();
+            loanIndex = i;
     loans.at(loanIndex).updateLoan();
     if (loans.at(loanIndex).getStatus() == "Overdue") {
         patronId = loans.at(loanIndex).getPatronId();           //seconds in a day
         fine = floor((date - loans.at(loanIndex).getDueDate()) / 86400) * .25;
         patrons.addFineBalance(patronId, fine);
     }
-
+    loans.erase(loans.begin() + loanIndex);
 }
+
+
 
 Loan Loans::findLoan() {
     int id;
@@ -75,11 +90,11 @@ Loan Loans::findLoan() {
 
 //Loan {i + 1} -- Loan ID: {loanId} BookId: {bookId} PatronId: {patronId} Due date: {dueDate} Status: {status}
 void Loans::printLoans() {
+    cout << "Loans" << endl;
     for (int i = 0; i < loans.size(); i++)
         cout << "Loan " << i + 1 << " --  Loan ID: " << loans.at(i).getLoanId() << " Book ID: "
              << loans.at(i).getBookId() << " Patron ID: " << loans.at(i).getPatronId() << " Due Date: "
-             << loans.at(i).getDueDate() << " Status: " << loans.at(i).getStatus();
-
-}
+             << loans.at(i).getDueDate() << " Status: " << loans.at(i).getStatus() << endl;
+} //fix due date print out!!!!
 
 //print llist of overdue books with patron info, update books and patrons

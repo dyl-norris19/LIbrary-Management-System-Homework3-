@@ -41,20 +41,20 @@ void Patrons::addFineBalance(int id, float f) {
         
 }
 
-void Patrons::payFineBalance(int id, float c) {
+void Patrons::payFineBalance() {
+    Patron patron = findPatron();
+    int patronIndex;
     float credit;
-    bool found = false;
-    for (int i = 0; i < patrons.size(); i++) {
-        if (id == patrons.at(i).getId()) {
-            found = true;
-            if (c <= patrons.at(i).getFine()) {
-                credit = patrons.at(i).getFine() - c;
-                patrons.at(i).setFine(credit);
-            } else
-                cout << "Payment more than fine. Could not execute." << endl;
-        } else
-            cout << "Patron not found" << endl;
-    }
+    cout << "Enter payment amount: "; cin >> credit;
+
+    for (int i = 0; i < patrons.size(); i++)
+        if (patron.getId() == patrons.at(i).getId())
+            patronIndex = i;
+    
+    if (credit > patrons.at(patronIndex).getFine())
+        cout << "Payment more than fine. Could not execute" << endl;
+    else   
+        patrons.at(patronIndex).setFine(patrons.at(patronIndex).getFine() - credit);
 }
 
 void Patrons::editNumBooks(int id) {
