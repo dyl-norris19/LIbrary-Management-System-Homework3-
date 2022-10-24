@@ -57,7 +57,7 @@ void Patrons::payFineBalance() {
 
     for (int i = 0; i < patrons.size(); i++) {
         if (patron.getId() == patrons.at(i).getId()) {
-            found == true;
+            found = true;
             patronIndex = i;
             cout << "Enter payment amount: "; cin >> credit;
             if (credit > patrons.at(patronIndex).getFine())
