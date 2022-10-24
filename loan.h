@@ -37,6 +37,7 @@ class Loan {
         void setPatronId(int p);
 
         time_t getDueDate();
+        void printDueDate();
         void setDueDate(time_t d);
 
         string getStatus();

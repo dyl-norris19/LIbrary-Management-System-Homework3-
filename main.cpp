@@ -41,7 +41,9 @@ void printMenu() {
     cout << "v - View Overdue Books" << endl;
     cout << "t - Report Lost" << endl;
     cout << "k - Print Books" << endl;
+    cout << "j - Print Single Book Details" << endl;
     cout << "a - Print Patrons" << endl;
+    cout << "s - Print Single Patron Details" << endl;
     cout << "l - Print Loans" << endl;
     cout << "q - Quit" << endl;
 
@@ -80,8 +82,14 @@ void executeMenu() {
         else if (choice == 'k')
             books.printBooks();
 
+        else if (choice == 'j')
+            books.printDetails();
+
         else if (choice == 'a')
             patrons.printPatrons();
+
+        else if (choice == 's')
+            patrons.printDetails();
 
         else if (choice == 'l')
             loans.printLoans();

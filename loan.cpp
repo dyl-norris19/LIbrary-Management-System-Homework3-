@@ -37,6 +37,10 @@ int Loan::getPatronId() {return patronId;}
 void Loan::setPatronId(int p) {patronId = p;}
 
 time_t Loan::getDueDate() {return dueDate;}
+void Loan::printDueDate() {
+    tm *ddstring = localtime(&dueDate);
+    cout << ddstring->tm_mon + 1 << "/" << ddstring->tm_mday << "/" << ddstring->tm_year - 100;
+}
 void Loan::setDueDate(time_t d) {dueDate = d;}
 
 string Loan::getStatus() {return status;}

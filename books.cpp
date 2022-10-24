@@ -33,32 +33,8 @@ void Books::addBook(int bNumber) {
     //prompt and store cost
     cout << "Cost: "; cin >> tempI; b.setCost(tempI);
 
-    //prompt and store status if valid
-    while (!valid) {
-        cout << "Status: ";
-        cin >> tempC;
-        switch (tempC) {
-            case 'i': {
-                b.setStatus("In"); valid = true;
-                break;
-            }
-            case 'o': {
-                b.setStatus("Out"); valid = true;
-                break;
-            }
-            case 'r': {
-                b.setStatus("Repair"); valid = true;
-                break;
-            }
-            case 'l': {
-                b.setStatus("Lost"); valid = true;
-                break;
-            }
-            default:
-                cout << "Input invalid. i - In, o - Out, r - Repair, l - Lost" << endl;
-                break;
-        }
-    }
+    cout << "Status: In" << endl; b.setStatus("In");
+    
     cout << endl;
     books.push_back(b);
 }

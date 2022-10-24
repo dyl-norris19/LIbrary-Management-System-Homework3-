@@ -76,7 +76,8 @@ void Patrons::editNumBooks(int id, int n) {
     bool found = false;
     for (int i = 0; i < patrons.size(); i++) {
         if (id == patrons.at(i).getId()) {
-            patrons.at(i).setNumBooks(patrons.at(i).getNumBooks() + n);
+            int num = patrons.at(i).getNumBooks() + n;
+            patrons.at(i).setNumBooks(num);
             found = true;
         }
     }
@@ -132,6 +133,6 @@ void Patrons::printDetails() {
     for (int i = 0; i < patrons.size(); i++)
         if (id == patrons.at(i).getId())
             cout << "Patron " << i + 1 << " -- " << patrons.at(i).getName() << ": "
-             << patrons.at(i).getId() << " - Fine Balance: " << patrons.at(i).getFine()
+             << patrons.at(i).getId() << " - Fine Balance: $" << patrons.at(i).getFine()
              << " - Number of books: " << patrons.at(i).getNumBooks() << endl;
 }
