@@ -15,19 +15,31 @@ using namespace std;
 
 Loans::Loans() {}
 
+void Loans::addLoan(int l, int b, int p, time_t d, string s) {
+    Loan loan = Loan();
+    loan.setLoanId(l);
+    loan.setBookId(b);
+    loan.setPatronId(p);
+    loan.setDueDate(d);
+    loan.setStatus(s);
+    loans.push_back(loan);
+}
+
 //adds loan to vector with book and patron. if book or patron not found,
 //do nothing and let user know
 //take loanNumber + 640
 void Loans::addLoan(Books& books, Patrons& patrons, int lNumber) {
     Patron patron = patrons.findPatron();
     if (patron == Patron(0))
-        cout << "Patron not found. Check id" << endl;
+        cout << "Patron not found. Check id" << endl << endl;
     else if (patron.getNumBooks() >= 6)
-        cout << "Too many books checked out" << endl;
+        cout << "Too many books checked out" << endl << endl;
     else {
         Book book = books.findBook();
         if (book == Book(0))
-            cout << "Book not found. Check id" << endl;
+            cout << "Book not found. Check id" << endl << endl;
+        else if (book.getStatus() != "In") 
+            cout << "Book is not available for check out. Please choose another." << endl << endl;
         else {
             loans.push_back(Loan(book.getId(), patron.getId(), lNumber));
             patrons.editNumBooks(patron.getId(), 1);
@@ -53,7 +65,7 @@ void Loans::renewLoan(Books& books, Patrons& patrons) {
         else
             loans.at(loanIndex).setDueDate(loans.at(loanIndex).getDueDate() + 864000);
     } else
-    cout << "Could not find loan" << endl;
+    cout << "Could not find loan" << endl << endl;
 }
 
 //deletes loan, if loan not found, do nothing and let user know
@@ -79,7 +91,9 @@ void Loans::deleteLoan(Books& books, Patrons& patrons) { //return book
         }
     }
     if (!found)
-        cout << "Loan not found. Check Id." << endl;
+        cout << "Loan not found. Check Id." << endl << endl;
+    else
+        cout << endl;
 }
 
 //changes book status, charges patron, and 
@@ -98,17 +112,19 @@ void Loans::reportLost(Books& books, Patrons& patrons) {
     }       
     if (found) {
         if (patron == Patron(0))
-            cout << "Patron not found. Check id" << endl;
+            cout << "Patron not found. Check id" << endl << endl;
         else {
             if (book == Book(0))
-                cout << "Book not found. Check id" << endl;
+                cout << "Book not found. Check id" << endl << endl;
             else {
                 books.editStatus(book.getId(), "Lost");
                 patrons.addFineBalance(patron.getId(), book.getCost());
                 loans.erase(loans.begin() + loanIndex);
+                cout << endl;
             }
         } 
-    }
+    } else
+        cout << "Loan not found. Check id." << endl << endl;
 }
 
 //finds loan using loan id
@@ -132,6 +148,7 @@ void Loans::printLoans() {
              << loans.at(i).getBookId() << " Patron ID: " << loans.at(i).getPatronId() << " Due Date: ";
              loans.at(i).printDueDate(); cout << " Status: " << loans.at(i).getStatus() << endl;
     }
+    cout << endl;
 } 
 
 void Loans::printOverdue(Books& books, Patrons& patrons) {
@@ -142,4 +159,8 @@ void Loans::printOverdue(Books& books, Patrons& patrons) {
             patrons.printPatron(patronId);
         }
     }
+    cout << endl;
 }
+
+int Loans::size() {return loans.size();}
+Loan Loans::at(int i) {return loans.at(i);}

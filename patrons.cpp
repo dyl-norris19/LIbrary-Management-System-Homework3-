@@ -12,6 +12,16 @@ using namespace std;
 
 Patrons::Patrons() {}
 
+
+void Patrons::addPatron(string n, int id, float f, int b) {
+    Patron p = Patron(0);
+    p.setName(n);
+    p.setId(id);
+    p.setFine(f);
+    p.setNumBooks(b);
+    patrons.push_back(p);
+}
+
 //adds patron to vector
 void Patrons::addPatron(int pNumber) {
     Patron patron = Patron(pNumber); string tempS; int tempI;
@@ -136,3 +146,6 @@ void Patrons::printDetails() {
              << patrons.at(i).getId() << " - Fine Balance: $" << patrons.at(i).getFine()
              << " - Number of books: " << patrons.at(i).getNumBooks() << endl;
 }
+
+int Patrons::size() {return patrons.size();}
+Patron Patrons::at(int i) {return patrons.at(i);}

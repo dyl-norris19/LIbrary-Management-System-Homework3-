@@ -22,6 +22,7 @@ class Patrons {
 
         Patrons();
 
+        void addPatron(string n, int id, float f, int b);
         void addPatron(int pNumber);
         void addFineBalance(int id, float f);
         void payFineBalance();
@@ -31,5 +32,7 @@ class Patrons {
         void printPatrons();
         void printPatron(int id);
         void printDetails();
+        int size();
+        Patron at(int i);
 };
 #endif

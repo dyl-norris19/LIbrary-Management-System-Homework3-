@@ -12,6 +12,17 @@ using namespace std;
 
 Books::Books() {}
 
+void Books::addBook(string a, string t, float isbn, int id, int c, string s) {
+    Book b = Book(0);
+    b.setAuthor(a);
+    b.setTitle(t);
+    b.setISBN(isbn);
+    b.setId(id);
+    b.setCost(c);
+    b.setStatus(s);
+    books.push_back(b);
+}
+
 //gets book info, adds it to books vector
 void Books::addBook(int bNumber) {
     Book b = Book(bNumber); int tempI; float tempF; 
@@ -118,4 +129,5 @@ void Books::printDetails() {
                  << books.at(i).getCost() << " Status: " <<  books.at(i).getStatus() << endl;
 }
 
-
+int Books::size() {return books.size();}
+Book Books::at(int i) {return books.at(i);}
