@@ -5,9 +5,9 @@
  */
 
 #include "loan.h"
-#include <iostream>
-#include <string>
-#include <ctime>
+//#include <iostream>
+//#include <string>
+//#include <ctime>
 
 using namespace std;
 

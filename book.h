@@ -7,19 +7,18 @@
 #ifndef Book_h
 #define Book_h
 
+#include "libraryItem.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-class Book {
+class Book : public LibraryItem {
     private:
         string author;
         string title;
         float isbnNum;
-        int libraryId;
-        int cost;
-        string status;
+        string category;
 
     public:
 
@@ -34,15 +33,9 @@ class Book {
         int getISBN();
         void setISBN(float i);
 
-        int getId();
-        void setId(int i);
+        string getCategory();
+        void setCategory(string c);
 
-        int getCost();
-        void setCost(int c);
-
-        string getStatus();
-        void setStatus(string s);
-
-        bool operator==(const Book& rhs) const;
+        //bool operator==(const Book& rhs) const;
 };
 #endif

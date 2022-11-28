@@ -5,8 +5,8 @@
  */
 
 #include "book.h"
-#include <iostream>
-#include <string>
+//#include <iostream>
+//#include <string>
 
 using namespace std;
 
@@ -14,9 +14,11 @@ Book::Book(int bNumber) {
     author = "Unknown";
     title = "None";
     isbnNum = 0;
-    libraryId = 264000 + bNumber; //264
-    cost = 0;
-    status = "In";
+    category = "None";
+    setId(264000 + bNumber); //????
+    setCost(0);
+    setStatus("In");
+    setLoanPeriod(0);
 }
 
 string Book::getAuthor() {return author;}
@@ -28,19 +30,13 @@ void Book::setTitle(string t) {title = t;}
 int Book::getISBN() {return isbnNum;}
 void Book::setISBN(float i) {isbnNum = i;}
 
-int Book::getId() {return libraryId;}
-void Book::setId(int i) {libraryId = i;}
+string Book::getCategory() {return category;}
+void Book::setCategory(string c) {category = c;}
 
-int Book::getCost() {return cost;}
-void Book::setCost(int c) {cost = c;}
-
-string Book::getStatus() {return status;}
-void Book::setStatus(string s) {status = s;}
-
-bool Book::operator==(const Book& rhs) const {
+/*bool Book::operator==(const Book& rhs) const {
     if (author == rhs.author && title == rhs.title && 
     isbnNum == rhs.isbnNum && libraryId == rhs.libraryId &&
     cost == rhs.cost && status == rhs.status)
         return true;
     return false;
-}
+}*/

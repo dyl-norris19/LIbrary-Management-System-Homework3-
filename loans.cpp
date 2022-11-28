@@ -5,10 +5,10 @@
  */
 
 #include "loans.h"
-#include <iostream>
-#include <string>
-#include <vector>
-#include <ctime>
+//#include <iostream>
+//#include <string>
+//#include <vector>
+//#include <ctime>
 #include <cmath>
 
 using namespace std;
@@ -36,7 +36,8 @@ void Loans::addLoan(Books& books, Patrons& patrons, int lNumber) {
         cout << "Too many books checked out" << endl << endl;
     else {
         Book book = books.findBook();
-        if (book == Book(0))
+        Book bruh = Book(0);
+        if (bruh.getId() == 264000)
             cout << "Book not found. Check id" << endl << endl;
         else if (book.getStatus() != "In") 
             cout << "Book is not available for check out. Please choose another." << endl << endl;
@@ -110,11 +111,12 @@ void Loans::reportLost(Books& books, Patrons& patrons) {
             loanIndex = i;
         }
     }       
+    Book bruh = Book(0);
     if (found) {
         if (patron == Patron(0))
             cout << "Patron not found. Check id" << endl << endl;
         else {
-            if (book == Book(0))
+            if (bruh.getId() == 264000)
                 cout << "Book not found. Check id" << endl << endl;
             else {
                 books.editStatus(book.getId(), "Lost");
